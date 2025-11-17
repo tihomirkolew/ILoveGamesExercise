@@ -1,53 +1,44 @@
+import { useEffect, useState } from "react";
+import GameCard from "../gameCard/GameCard"; 
+
 export default function Home() {
+
+    const [latestGames, setLatestGames] = useState([]);
+
+    // fetch games and sort them by added(_createdOn)
+    useEffect(() => {
+        const fetchGames = async () => {
+            try {
+                const response = await fetch("http://localhost:3030/data/games?sortBy=_createdOn%20desc")
+                const data = await response.json()
+                setLatestGames(data)
+            } catch (err) {
+                alert(err.message)
+            }
+        }
+
+        fetchGames()
+    }, [])
 
     return (
         <section id="welcome-world">
 
-        <div class="welcome-message">
-          <h2>ALL new games are</h2>
-          <h3>Only in </h3>
-          <img id="logo-left" src="./images/logo.png" alt="logo" />
-        </div>
-
-        <div id="home-page">
-          <h1>Latest Games</h1>
-          <div id="latest-wrap">
-            {/* <!-- Display div: with information about every game (if any) --> */}
-            <div class="home-container">
-              <div class="game">
-                <img src="./images/witcher.png" alt="Elden Ring" />
-                <div class="details-overlay">
-                  <p class="name">The Witcher 3</p>
-                  <p class="genre">Open World</p>
-                  <button class="details-button">Details</button>
-                </div>
-              </div>
-              <div class="game">
-                <img src="./images/elden ring.png" alt="Elden Ring" />
-                <div class="details-overlay">
-                  <p class="name">Elden Ring</p>
-                  <p class="genre">Action RPG</p>
-                  <button class="details-button">Details</button>
-                </div>
-              </div>
-              <div class="game">
-                <img src="./images/minecraft.png" alt="Minecraft" />
-                <div class="details-overlay">
-                  <p class="name">Minecraft</p>
-                  <p class="genre">Sandbox</p>
-                  <button class="details-button">Details</button>
-                </div>
-                {/* <!-- Display paragraph: If there is no games  --> */}
-                {/* <!-- <p class="no-articles">No games yet</p> --> */}
-              </div>
-
+            <div className="welcome-message">
+                <h2>ALL new games are</h2>
+                <h3>Only in </h3>
+                <img id="logo-left" src="./images/logo.png" alt="logo" />
             </div>
 
-          </div>
-          <footer>
-            <p class="center-text">React Course Exercise @ SoftUni &trade;</p>
-          </footer>
-        </div>
-      </section>
+            <div id="home-page">
+                <h1>Latest Games</h1>
+                <div id="latest-wrap">
+                    {/* Display div: with information about every game (if any) */}
+                    <div className="home-container">
+                        {latestGames.map(game => <GameCard key={game.id} {...game} />)}
+                        {/* <GameCard /> */}
+                    </div>
+                </div>
+            </div>
+        </section>
     )
 }

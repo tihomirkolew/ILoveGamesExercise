@@ -1,16 +1,29 @@
+import { Route, Routes } from "react-router"
+
 import Header from "./components/header/Header"
 import Home from "./components/home/Home"
+import Footer from "./components/footer/Footer"
+import Catalog from "./components/catalog/Catalog"
+import Details from "./components/details/Details"
+import CreateGame from "./components/createGame/CreateGame"
 
 function App() {
 
-  return (
-    <>
-      <Header />
+    return (
+        <>
+            <Header />
 
-      <Home />
-      
-    </>
-  )
+            <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/games" element={<Catalog />} />
+                <Route path="/games/:gameId/details" element={<Details />} />
+                <Route path="games/create" element={<CreateGame />} />
+            </Routes>
+
+            <Footer />
+
+        </>
+    )
 }
 
 export default App
