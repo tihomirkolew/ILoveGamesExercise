@@ -1,16 +1,18 @@
+import { Link } from "react-router";
+
 export default function Header() {
     return (
         <header>
             <nav>
-                <a className="home" href="#"> <img src="./images/logo.png" alt="logo" /> </a>
-                <a href="#">Catalog</a>
+                <Link className="home" to="/"> <img src="./images/logo.png" alt="logo" /> </Link>
+                <Link to="/games">Catalog</Link>
                 <div id="user">
-                    <a href="#">Add Game</a>
-                    <a href="#">Logout</a>
+                    <Link to="/games/create">Add Game</Link>
+                    <Link to="#">Logout</Link>
                 </div>
                 <div id="guest">
-                    <a href="#">Login</a>
-                    <a href="#">Register</a>
+                    <Link to="#">Login</Link>
+                    <Link to="#">Register</Link>
                 </div>
             </nav>
         </header>
