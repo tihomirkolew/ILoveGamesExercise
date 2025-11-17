@@ -1,18 +1,29 @@
+import { useEffect, useState } from "react";
 import GameCard from "../gameCard/GameCard";
 
 export default function Catalog() {
+
+    const [games, setGames] = useState([])
+
+    useEffect(() => {
+        fetch('http://localhost:3030/jsonstore/games?sortBy=_createdOn%20desc')
+        .then(response => response.json())
+        .then(result => setGames(Object.values(result)))
+        .catch(err => alert(err.message))
+    }, []);    
+
     return (
         <>
             <section id="catalog-page">
                 <h1>Catalog</h1>
                 {/* <!-- Display div: with information about every game (if any) --> */}
-                <div class="catalog-container">
+                <div className="catalog-container">
 
-                    <GameCard />
+                    {games.map(game => <GameCard key={game._id} {...game} />)}
 
                 </div>
                 {/* <!-- Display paragraph: If there is no games  --> */}
-                {/* <!-- <h3 class="no-articles">No Added Games Yet</h3> --> */}
+                {/* <!-- <h3 className="no-articles">No Added Games Yet</h3> --> */}
             </section>
         </>
     );

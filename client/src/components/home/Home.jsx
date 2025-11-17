@@ -34,7 +34,7 @@ export default function Home() {
                 <div id="latest-wrap">
                     {/* Display div: with information about every game (if any) */}
                     <div className="home-container">
-                        {latestGames.map(game => <GameCard key={game.id} {...game} />)}
+                        {latestGames.map(game => <GameCard key={game._id} {...game} />)}
                         {/* <GameCard /> */}
                     </div>
                 </div>
