@@ -1,4 +1,18 @@
-export default function Details() {
+import { useEffect, useState } from "react";
+import { useParams } from "react-router";
+
+export default function Details(
+) {
+    const { gameId } = useParams();
+    const [game, setGame] = useState([]);
+
+    useEffect(() => {
+        fetch(`http://localhost:3030/jsonstore/games/${gameId}`)
+            .then(response => response.json())
+            .then(result => setGame(result))
+            .catch(err => alert(err.message));
+    }, [gameId]);
+
     return (
         <>
             <section id="game-details">
@@ -6,36 +20,30 @@ export default function Details() {
                 <div class="info-section">
 
                     <div class="header-and-image">
-                        <img class="game-img" src="images/elden ring.png" alt="Elden Ring Cover Art" />
+                        <img class="game-img" src={game.imageUrl} alt="Elden Ring Cover Art" />
 
                         <div class="meta-info">
-                            <h1 class="game-name">Elden Ring</h1>
+                            <h1 class="game-name">{game.title}</h1>
 
                             <p class="data-row">
                                 <span class="label">Genre:</span>
-                                <span class="value">Action RPG</span>
+                                <span class="value">{game.genre}</span>
                             </p>
 
                             <p class="data-row">
                                 <span class="label">Active Players:</span>
-                                <span class="value">100000</span>
+                                <span class="value">{game.players}</span>
                             </p>
 
                             <p class="data-row">
                                 <span class="label">Release Date:</span>
-                                <span class="value">2022-02-25</span>
+                                <span class="value">{game.date}</span>
                             </p>
                         </div>
                         <div class="summary-section">
                             <h2>Summary:</h2>
                             <p class="text-summary">
-                                Elden Ring is a fantasy action RPG developed by FromSoftware and Bandai Namco. Set in the Lands
-                                Between,
-                                players embark on an epic quest to become the Elden Lord, exploring a vast open world designed
-                                by Hidetaka Miyazaki,
-                                with worldbuilding contributed by fantasy author George R. R. Martin. The game features
-                                challenging combat,
-                                deep lore, and extensive character customization.
+                                {game.summary}
                             </p>
                         </div>
                     </div>
