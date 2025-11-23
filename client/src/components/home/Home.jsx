@@ -9,9 +9,9 @@ export default function Home() {
     useEffect(() => {
         const fetchGames = async () => {
             try {
-                const response = await fetch("http://localhost:3030/data/games?sortBy=_createdOn%20desc")
+                const response = await fetch("http://localhost:3030/jsonstore/games?sortBy=_createdOn%20desc")
                 const data = await response.json()
-                setLatestGames(data)
+                setLatestGames(Object.values(data))
             } catch (err) {
                 alert(err.message)
             }
