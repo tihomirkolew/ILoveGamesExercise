@@ -10,6 +10,7 @@ import Register from "./components/register/Register"
 import Login from "./components/login/Login"
 import { useState } from "react"
 import Logout from "./components/logout/Logout"
+import EditGame from "./components/editGame/editGame"
 
 function App() {
     const [registeredUsers, setRegisteredUsers] = useState([]);
@@ -48,6 +49,7 @@ function App() {
                 <Route path="/" element={<Home />} />
                 <Route path="/games" element={<Catalog />} />
                 <Route path="/games/:gameId/details" element={<Details />} />
+                <Route path="/games/:gameId/edit" element={<EditGame />} />
                 <Route path="/games/create" element={<CreateGame />} />
                 <Route path="/register" element={<Register onRegister={registerHandler} />} />
                 <Route path="/login" element={<Login onLogin={loginHandler} />} />
