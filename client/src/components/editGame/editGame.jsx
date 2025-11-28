@@ -23,7 +23,7 @@ export default function EditGame() {
     };
 
     useEffect(() => {
-        request(`http://localhost:3030/jsonstore/games/${gameId}`)
+        request(`/games/${gameId}`)
             .then(result => {
                 setValues(result)
             })
@@ -32,9 +32,18 @@ export default function EditGame() {
             })
     }, [gameId]);
 
+    const editGameHandler = (formData) => {
+        const gameData = Object.fromEntries(formData);
+
+        console.log(gameData);
+        
+        await request(`/games/${gameId}`)
+
+    }
+
     return (
         <section id="edit-page">
-            <form id="add-new-game">
+            <form id="add-new-game" action={editGameHandler}>
                 <div className="container">
 
                     <h1>Edit Game</h1>

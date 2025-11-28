@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import GameCard from "../gameCard/GameCard"; 
+import GameCard from "../gameCard/GameCard";
+import request from "../../utils/request";
 
 export default function Home() {
 
@@ -7,18 +8,18 @@ export default function Home() {
 
     // fetch games and sort them by added(_createdOn)
     useEffect(() => {
-        const fetchGames = async () => {
-            try {
-                const response = await fetch("http://localhost:3030/jsonstore/games?sortBy=_createdOn%20desc")
-                const data = await response.json()
-                setLatestGames(Object.values(data))
-            } catch (err) {
-                alert(err.message)
-            }
-        }
+        request('/games')
+            .then(result => {
+                const resultGames = Object.values(result)
+                    .sort((a, b) => b._createdOn = a._createdOn)
+                    .slice(0, 3)
 
-        fetchGames()
-    }, [])
+                setLatestGames(resultGames)
+            })
+            .catch(err => {
+                alert(err.message);
+            }) 
+    }, []);
 
     return (
         <section id="welcome-world">
