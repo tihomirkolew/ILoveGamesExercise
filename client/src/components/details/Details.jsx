@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 
 export default function Details(
 ) {
@@ -16,7 +16,6 @@ export default function Details(
 
     const deleteGameHandler = async () => {
         // confirm
-
         const isConfirmed = confirm(`Are you sure you want to delete "${game.title}"`);
 
         if (!isConfirmed) {
@@ -32,7 +31,6 @@ export default function Details(
         } catch (err) {
             alert(err.message)
         }
-
     }
 
     return (
