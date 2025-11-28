@@ -4,9 +4,7 @@ import { useParams } from "react-router";
 
 export default function CreateComment({
     user,
-}) {
-    console.log(user.email);
-    
+}) {    
     const { gameId } = useParams();
     const [comment, setComment] = useState('');
 
@@ -36,6 +34,7 @@ export default function CreateComment({
                     className="btn submit"
                     type="submit"
                     value="Add Comment"
+                    disabled={!user}
                 />
             </form>
         </article>
