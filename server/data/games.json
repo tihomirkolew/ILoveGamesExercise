@@ -38,5 +38,15 @@
         "imageUrl": "/images/cyberpunk.png",
         "summary": "An open-world, action-adventure story set in Night City, a megalopolis obsessed with power, glamour and body modification. You play as V, a mercenary outlaw going after a one-of-a-kind implant that is the key to immortality.",
         "_createdOn": 1607558400000
+    },
+    "605e90e4-625b-4b6a-bb4b-9fb0a7315c50": {
+        "_id": "605e90e4-625b-4b6a-bb4b-9fb0a7315c50",
+        "title": "Counter Strike 2",
+        "genre": "Action",
+        "players": "123125",
+        "date": "2025-11-02",
+        "imageUrl": "https://cdn2.steamgriddb.com/grid/0662aa1719017e0efa5fa8daf0880c6e.png",
+        "summary": "Counter Strike 2 where skins are worth over some apartments.",
+        "_createdOn": 1764364015159
     }
 }

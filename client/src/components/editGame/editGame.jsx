@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import request from "../../utils/request";
 
 export default function EditGame() {
+    const navigate = useNavigate();
     const { gameId } = useParams();
     const initialValues = {
         title: '',
@@ -32,13 +33,14 @@ export default function EditGame() {
             })
     }, [gameId]);
 
-    const editGameHandler = (formData) => {
-        const gameData = Object.fromEntries(formData);
-
-        console.log(gameData);
-        
-        await request(`/games/${gameId}`)
-
+    const editGameHandler = async () => {
+        try {
+            await request(`/games/${gameId}`, 'PUT', values);
+            
+            navigate(`/games/${gameId}/details`);
+        } catch (error) {
+            alert(error.message);
+        }
     }
 
     return (
