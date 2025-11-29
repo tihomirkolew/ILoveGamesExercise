@@ -1,21 +1,17 @@
-import { useEffect, useState } from "react";
 import { useParams } from "react-router";
-import request from "../../../utils/request";
+import useRequest from "../../../hooks/useRequest";
 
 export default function DetailsComments({
     refresh,
 }) {
-    const [comments, setComments] = useState([]);
     const { gameId } = useParams();
-    
-    useEffect(() => {
-        request('/comments')
-            .then(result => {
-                const currentGameComments = Object.values(result).filter(comment => comment.gameId === gameId);
 
-                setComments(currentGameComments);
-            })
-    }, [gameId, refresh]);
+    const urlParams = new URLSearchParams({
+        where: `gameId="${gameId}"`,
+        load: 'author=_ownerId:users'
+    })
+
+    const { data: comments } = useRequest(`/data/comments?${urlParams.toString()}`, []);
 
     return (
         <div className="details-comments">
@@ -23,7 +19,7 @@ export default function DetailsComments({
             <ul>
                 {comments.map(comment => (
                     <li key={comment._id} className="comment">
-                        <p>{comment.author}: {comment.message}</p>
+                        <p>{comment.author?.email}: {comment.message}</p>
                     </li>
                 ))}
 
