@@ -11,26 +11,32 @@ import Login from "./components/login/Login"
 import { useState } from "react"
 import Logout from "./components/logout/Logout"
 import EditGame from "./components/editGame/editGame"
+import request from "./utils/request"
 
 function App() {
-    const [registeredUsers, setRegisteredUsers] = useState([]);
     const [user, setUser] = useState(null);
 
-    const registerHandler = (email, password) => {
-        
-        if (registeredUsers.some(user => user.email === email)) {
-            throw new Error('Email is taken!');
-        }
-
+    const registerHandler = async (email, password) => {
         const newUser = { email, password };
 
-        setRegisteredUsers(state => [...state, newUser]);
+        // todo register api call
+        const response = await fetch('http://localhost:3030/users/register', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+            },
+            body: JSON.stringify(newUser),
+        });
 
+        const result = await response.json()
+
+        console.log(result);
+        
+        // login user after registration
         setUser(newUser);
     }
 
     const loginHandler = (email, password) => {
-        const user = registeredUsers.find(u => u.email === email && u.password === password);
         if (!user) {
             throw new Error('Invalid email or password');
         }

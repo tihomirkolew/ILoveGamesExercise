@@ -7,7 +7,7 @@ export default function Register({
 
     const navigate = useNavigate();
 
-    const registerHandler = (values) => {
+    const registerHandler = async (values) => {
         const { email, password, confirmPassword } = values;
 
         if (!email || !password) {
@@ -18,7 +18,8 @@ export default function Register({
         }
 
         try {
-            onRegister(email, password);
+            await onRegister(email, password);
+
             navigate('/');
         } catch (err) {
             alert(err.message);
