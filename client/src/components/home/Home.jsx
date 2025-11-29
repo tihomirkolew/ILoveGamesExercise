@@ -1,25 +1,14 @@
-import { useEffect, useState } from "react";
 import GameCard from "../gameCard/GameCard";
-import request from "../../utils/request";
+import useRequest from "../../hooks/useRequest";
 
 export default function Home() {
+    // const urlSearchParams = new URLSearchParams({
+    //     sortBy: '_createdOn desc'
+    // });
 
-    const [latestGames, setLatestGames] = useState([]);
+    const searchParams = encodeURIComponent('_createdOn desc');
 
-    // fetch games and sort them by added(_createdOn)
-    useEffect(() => {
-        request('/games')
-            .then(result => {
-                const resultGames = Object.values(result)
-                    .sort((a, b) => b._createdOn = a._createdOn)
-                    .slice(0, 3)
-
-                setLatestGames(resultGames)
-            })
-            .catch(err => {
-                alert(err.message);
-            }) 
-    }, []);
+    const { data: latestGames } = useRequest(`/data/games?sortBy=${searchParams.toString()}&pageSize=3`, []);
 
     return (
         <section id="welcome-world">
@@ -33,10 +22,10 @@ export default function Home() {
             <div id="home-page">
                 <h1>Latest Games</h1>
                 <div id="latest-wrap">
-                    {/* Display div: with information about every game (if any) */}
                     <div className="home-container">
+                        {latestGames.length === 0 && <p className="no-articles">No games yet</p>}
+
                         {latestGames.map(game => <GameCard key={game._id} {...game} />)}
-                        {/* <GameCard /> */}
                     </div>
                 </div>
             </div>

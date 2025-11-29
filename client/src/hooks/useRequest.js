@@ -1,10 +1,11 @@
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import UserContext from "../components/contexts/UserContext";
 
 const baseUrl = 'http://localhost:3030'
 
-export default function useRequest() {
+export default function useRequest(url, initialDate) {
     const { user, isAuthenticated } = useContext(UserContext);
+    const [data, setData] = useState(initialDate);
 
     const request = async (url, method, data, config = {}) => {
         let options = {};
@@ -38,13 +39,21 @@ export default function useRequest() {
         }
 
         const result = await response.json();
-        console.log(result);
-        
 
         return result;
     };
 
+    useEffect(() => {
+        if (!url) return;
+        
+        request(url)
+        .then(result => setData(result))
+        .catch(err => alert(err.message))
+    }, [url])
+
     return {
         request,
+        data,
+        setData,
     }
 }
