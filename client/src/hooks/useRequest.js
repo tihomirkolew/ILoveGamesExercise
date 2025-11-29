@@ -33,11 +33,13 @@ export default function useRequest() {
             throw response.statusText;
         }
 
-        if (response.status === '204') {
+        if (response.status === 204) {
             return {};
         }
 
         const result = await response.json();
+        console.log(result);
+        
 
         return result;
     };
