@@ -11,7 +11,7 @@ export default function DetailsComments({
     useEffect(() => {
         request('/comments')
             .then(result => {
-                const currentGameComments = Object.values(result).filter(comment => comment.gameId === gameId)
+                const currentGameComments = Object.values(result).filter(comment => comment.gameId === gameId);
 
                 setComments(currentGameComments);
             })
