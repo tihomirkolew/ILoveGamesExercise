@@ -12,6 +12,7 @@ import { useState } from "react"
 import Logout from "./components/logout/Logout"
 import EditGame from "./components/editGame/editGame"
 import request from "./utils/request"
+import UserContext from "./components/contexts/UserContext"
 
 function App() {
     const [user, setUser] = useState(null);
@@ -47,8 +48,16 @@ function App() {
         setUser(null);
     }
 
+    const userContextValues = {
+        user,
+        isAuthenticated: !!user?.accessToken,
+        registerHandler,
+        loginHandler,
+        logoutHandler,
+    }
+
     return (
-        <>
+        <UserContext.Provider value={userContextValues}>
             <Header user={user} />
 
             <Routes>
@@ -64,7 +73,7 @@ function App() {
 
             <Footer />
 
-        </>
+        </UserContext.Provider>
     )
 }
 
