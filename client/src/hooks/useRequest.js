@@ -1,6 +1,11 @@
+import { useContext } from "react";
+import UserContext from "../components/contexts/UserContext";
+
 const baseUrl = 'http://localhost:3030'
 
 export default function useRequest() {
+    const { user, isAuthenticated } = useContext(UserContext);
+
     const request = async (url, method, data) => {
         let options = {};
 
@@ -15,13 +20,27 @@ export default function useRequest() {
             options.body = JSON.stringify(data);
         }
 
+        console.log(isAuthenticated);
+        
+
+        if (user?.accessToken) {
+            options.headers = {
+                ...options.headers,
+                'X-Authorization': user.accessToken,
+            }
+        }
+
         const response = await fetch(`${baseUrl}${url}`, options);
 
         if (!response.ok) {
             throw response.statusText;
         }
 
-        const result = response.json();
+        if (response.status === '204') {
+            return {};
+        }
+
+        const result = await response.json();
 
         return result;
     };

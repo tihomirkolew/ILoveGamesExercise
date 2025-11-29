@@ -1,9 +1,6 @@
 import { Link } from "react-router";
 
-export default function Header({
-    user,
-}) {
-    console.log(`User: ${user?.email}`);
+export default function Header() {
     
     return (
         <header>
