@@ -8,9 +8,8 @@ const UserContext = createContext({
         password: '',
         _createdOn: 0,
         _id: '',
-        accessToken: '',
+        accessToken: ''
     },
-
     registerHandler() { },
     loginHandler() { },
     logoutHandler() { },
@@ -42,9 +41,11 @@ export function UserProvider({
     }
 
     const logoutHandler = () => {
-        return request('/users/logout')
+        return request('/users/logout', 'GET', null, { accessToken: user.accessToken })
+            .then(console.log('logged out'))
+            .catch(() => alert('Problem with logout'))
             .finally(() => setUser(null));
-    }
+    };
 
     const userContextValues = {
         user,
